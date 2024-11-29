@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Previsão do Horóscopo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .signs-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .sign {
+      margin: 10px;
+      width: 80px;
+      height: 80px;
+      overflow: hidden;
+      position: relative;
+    }
+    .sign img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .sign:hover img {
+      transform: scale(1.2);
+    }
+    .forecast {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      background-color: #fff;
+      width: 80%;
+      max-width: 600px;
+      text-align: center;
+    }
+    .forecast h2 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+    .forecast p {
+      font-size: 1.1em;
+      line-height: 1.5;
+    }
+    .controls {
+      margin-top: 20px;
+    }
+    .controls button {
+      padding: 10px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+    .light-theme {
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    .dark-theme {
+      background-color: #333;
+      color: #f4f4f4;
+    }
+    .dark-theme .forecast {
+      background-color: #444;
+      border-color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Previsão do Horóscopo</h1>
+
+  <div class="signs-container">
+    <div class="sign" onclick="showForecast('aries')">
+      <img src="img/aries.png" alt="Áries">
+    </div>
+    <div class="sign" onclick="showForecast('touro')">
+      <img src="img/touro.png" alt="Touro">
+    </div>
+    <div class="sign" onclick="showForecast('gemeos')">
+      <img src="img/gemeos.png" alt="Gêmeos">
+    </div>
+    <div class="sign" onclick="showForecast('cancer')">
+      <img src="img/cancer.png" alt="Câncer">
+    </div>
+    <div class="sign" onclick="showForecast('leao')">
+      <img src="img/leao.png" alt="Leão">
+    </div>
+    <div class="sign" onclick="showForecast('virgem')">
+      <img src="img/virgem.png" alt="Virgem">
+    </div>
+    <div class="sign" onclick="showForecast('libra')">
+      <img src="img/libra.png" alt="Libra">
+    </div>
+    <div class="sign" onclick="showForecast('escorpiao')">
+      <img src="img/escorpiao.png" alt="Escorpião">
+    </div>
+    <div class="sign" onclick="showForecast('sagitario')">
+      <img src="img/sagitario.png" alt="Sagitário">
+    </div>
+    <div class="sign" onclick="showForecast('capricornio')">
+      <img src="img/capricornio.png" alt="Capricórnio">
+    </div>
+    <div class="sign" onclick="showForecast('aquario')">
+      <img src="img/aquario.png" alt="Aquário">
+    </div>
+    <div class="sign" onclick="showForecast('peixes')">
+      <img src="img/peixes.png" alt="Peixes">
+    </div>
+  </div>
+
+  <div id="forecast" class="forecast">
+    <h2 id="forecast-sign"></h2>
+    <p id="forecast-text"></p>
+  </div>
+
+  <div class="controls">
+    <button onclick="toggleTheme('light')">Tema Claro</button>
+    <button onclick="toggleTheme('dark')">Tema Escuro</button>
+  </div>
+
+  <script>
+    const forecasts = {
+      aries: "Hoje é um dia de ação para Áries. Aproveite sua energia e faça algo que você adia há muito tempo.",
+      touro: "Amanhã, Touro, será um bom dia para focar na sua estabilidade financeira e emocional.",
+      gemeos: "Gêmeos, sua comunicação estará afiada. Use isso para resolver conflitos antigos.",
+      cancer: "Câncer, hoje é um bom dia para fortalecer os laços familiares e cultivar a paz.",
+      leao: "Leão, sua confiança estará em alta. Não hesite em mostrar suas habilidades.",
+      virgem: "Virgem, é um bom momento para reorganizar sua vida pessoal e profissional.",
+      libra: "Libra, o equilíbrio é fundamental hoje. Busque harmonia em suas relações.",
+      escorpiao: "Escorpião, sua intuição estará mais forte. Confie no seu instinto para tomar decisões.",
+      sagitario: "Sagitário, a aventura está no seu caminho. Procure explorar algo novo.",
+      capricornio: "Capricórnio, foco e disciplina serão suas melhores armas. Concentre-se em seus objetivos.",
+      aquario: "Aquário, suas ideias criativas podem trazer novas oportunidades hoje.",
+      peixes: "Peixes, procure um momento de introspecção. Seu coração precisa de paz para continuar."
+    };
+
+    function showForecast(sign) {
+      const forecastElement = document.getElementById('forecast');
+      const forecastSign = document.getElementById('forecast-sign');
+      const forecastText = document.getElementById('forecast-text');
+
+      forecastSign.innerText = `Previsão para ${sign.charAt(0).toUpperCase() + sign.slice(1)}`;
+      forecastText.innerText = forecasts[sign];
+      forecastElement.style.display = 'block';
+    }
+
+    function toggleTheme(theme) {
+      document.body.classList.remove('light-theme', 'dark-theme');
+      if (theme === 'light') {
+        document.body.classList.add('light-theme');
+      } else {
+        document.body.classList.add('dark-theme');
+      }
+    }
+  </script>
+
+</body>
+</html>
